@@ -30,6 +30,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import { Separator } from '@/components/ui/separator';
+import PatientCombobox from '@/components/shared/PatientCombobox';
+import AppointmentCombobox from '@/components/shared/AppointmentCombobox';
 import type { MedicalRecord } from '@/types/database';
 
 function VitalGauge({ label, value, unit, icon: Icon, min, max, color }: {
@@ -169,13 +171,22 @@ export default function NewMedicalRecordPage() {
         <Card>
           <CardContent className="flex gap-4 p-4">
             <div className="flex-1 space-y-2">
-              <Label>ID Pasien *</Label>
-              <Input {...register('patient_id')} placeholder="Pilih pasien (UUID)" />
+              <Label>Pasien *</Label>
+              <PatientCombobox
+                clinicId={user?.clinic_id}
+                value={watch('patient_id')}
+                onSelect={(id) => setValue('patient_id', id, { shouldValidate: true })}
+              />
               {errors.patient_id && <p className="text-xs text-destructive">{errors.patient_id.message}</p>}
             </div>
             <div className="flex-1 space-y-2">
-              <Label>ID Jadwal (opsional)</Label>
-              <Input {...register('appointment_id')} placeholder="UUID jadwal" />
+              <Label>Jadwal (opsional)</Label>
+              <AppointmentCombobox
+                clinicId={user?.clinic_id}
+                patientId={watch('patient_id')}
+                value={watch('appointment_id') || undefined}
+                onSelect={(id) => setValue('appointment_id', id, { shouldValidate: true })}
+              />
             </div>
             <div className="flex items-end gap-2">
               <div className="flex items-center gap-2 rounded-lg border p-2.5">

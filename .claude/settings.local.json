@@ -14,7 +14,10 @@
       "Bash(node fix-seed.js)",
       "Bash(find:*)",
       "Bash(ls \"D:/Services Project/Med-Flow/app/\\(auth\\)/\")",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(grep -r \"UUID\\\\|uuid\\\\|ID Jadwal\\\\|ID Pasien\\\\|ID Dokter\" '/d/Services Project/Med-Flow' --include=*.tsx)",
+      "Bash(grep -r \"appointment_id\\\\|patient_id\\\\|doctor_id\" '/d/Services Project/Med-Flow/lib' --include=*.ts)",
+      "Bash(xargs ls:*)"
     ]
   }
 }

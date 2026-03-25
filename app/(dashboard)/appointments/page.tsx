@@ -30,6 +30,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import PatientCombobox from '@/components/shared/PatientCombobox';
+import DoctorCombobox from '@/components/shared/DoctorCombobox';
 import type { AppointmentStatus } from '@/types/database';
 
 export default function AppointmentsPage() {
@@ -55,6 +57,7 @@ export default function AppointmentsPage() {
     handleSubmit,
     reset,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<AppointmentFormData>({
     resolver: zodResolver(appointmentSchema) as any,
@@ -254,14 +257,22 @@ export default function AppointmentsPage() {
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
-              <Label>ID Pasien</Label>
-              <Input {...register('patient_id')} placeholder="UUID pasien" />
+              <Label>Pasien</Label>
+              <PatientCombobox
+                clinicId={user?.clinic_id}
+                value={watch('patient_id')}
+                onSelect={(id) => setValue('patient_id', id, { shouldValidate: true })}
+              />
               {errors.patient_id && <p className="text-xs text-destructive">{errors.patient_id.message}</p>}
             </div>
 
             <div className="space-y-2">
-              <Label>ID Dokter</Label>
-              <Input {...register('doctor_id')} placeholder="UUID dokter" />
+              <Label>Dokter</Label>
+              <DoctorCombobox
+                clinicId={user?.clinic_id}
+                value={watch('doctor_id')}
+                onSelect={(id) => setValue('doctor_id', id, { shouldValidate: true })}
+              />
               {errors.doctor_id && <p className="text-xs text-destructive">{errors.doctor_id.message}</p>}
             </div>
 
