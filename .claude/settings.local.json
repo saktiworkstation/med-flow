@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src=no --import-alias \"@/*\" --use-npm)",
+      "Bash(npx create-next-app@latest temp-medflow --typescript --tailwind --eslint --app --src=no --import-alias \"@/*\" --use-npm)",
+      "Bash(npx create-next-app@14 temp-medflow --typescript --tailwind --eslint --app --src=no --import-alias \"@/*\" --use-npm --no-turbopack)",
+      "Bash(rm -rf temp-medflow)",
+      "Bash(npm init:*)",
+      "Bash(npm install:*)",
+      "Bash(cd:*)",
+      "Bash(npm ls:*)",
+      "Bash(npx next:*)",
+      "Bash(\"D:/Services Project/Med-Flow/next-env.d.ts\")",
+      "Bash(node fix-seed.js)"
+    ]
+  }
+}
