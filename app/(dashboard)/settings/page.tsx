@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import {
@@ -12,7 +13,7 @@ import {
   Download,
   Save,
   Loader2,
-  UserPlus,
+  Lock,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useAuth } from '@/hooks/useAuth';
@@ -27,9 +28,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { getRoleLabel, getRoleBadgeColor } from '@/lib/utils';
+import TeamManagement from '@/components/settings/TeamManagement';
+import ChangePasswordForm from '@/components/settings/ChangePasswordForm';
 
 export default function SettingsPage() {
   const { user } = useAuth();
+  const searchParams = useSearchParams();
+  const defaultTab = searchParams.get('tab') || 'general';
   const [saving, setSaving] = useState(false);
   const supabase = getSupabaseClient();
 
@@ -50,7 +55,7 @@ export default function SettingsPage() {
         <p className="text-muted-foreground">Kelola pengaturan klinik dan tim</p>
       </div>
 
-      <Tabs defaultValue="general">
+      <Tabs defaultValue={defaultTab}>
         <TabsList className="flex-wrap">
           <TabsTrigger value="general">
             <Building className="mr-2 h-4 w-4" />
@@ -67,6 +72,10 @@ export default function SettingsPage() {
           <TabsTrigger value="notifications">
             <Bell className="mr-2 h-4 w-4" />
             Notifikasi
+          </TabsTrigger>
+          <TabsTrigger value="password">
+            <Lock className="mr-2 h-4 w-4" />
+            Password
           </TabsTrigger>
           <TabsTrigger value="audit">
             <Shield className="mr-2 h-4 w-4" />
@@ -134,45 +143,7 @@ export default function SettingsPage() {
         </TabsContent>
 
         <TabsContent value="team" className="mt-6 space-y-4">
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle>Anggota Tim</CardTitle>
-                  <CardDescription>Kelola akses pengguna klinik</CardDescription>
-                </div>
-                <Button size="sm">
-                  <UserPlus className="mr-2 h-4 w-4" />
-                  Undang
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {[
-                  { name: 'Dr. Budi Santoso', role: 'clinic_owner', email: 'budi@kliniksehat.co.id', active: true },
-                  { name: 'Dr. Siti Rahayu', role: 'doctor', email: 'siti@kliniksehat.co.id', active: true },
-                  { name: 'Dr. Ahmad Wijaya', role: 'doctor', email: 'ahmad@kliniksehat.co.id', active: true },
-                  { name: 'Dewi Lestari', role: 'nurse', email: 'dewi@kliniksehat.co.id', active: true },
-                  { name: 'Rina Wulandari', role: 'receptionist', email: 'rina@kliniksehat.co.id', active: true },
-                  { name: 'Hendra Gunawan', role: 'pharmacist', email: 'hendra@kliniksehat.co.id', active: true },
-                ].map((member) => (
-                  <div key={member.email} className="flex items-center justify-between rounded-lg border p-3">
-                    <div>
-                      <p className="font-medium">{member.name}</p>
-                      <p className="text-xs text-muted-foreground">{member.email}</p>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Badge className={getRoleBadgeColor(member.role)}>
-                        {getRoleLabel(member.role)}
-                      </Badge>
-                      <Switch defaultChecked={member.active} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+          <TeamManagement />
         </TabsContent>
 
         <TabsContent value="billing" className="mt-6">
@@ -219,6 +190,10 @@ export default function SettingsPage() {
               </div>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        <TabsContent value="password" className="mt-6">
+          <ChangePasswordForm />
         </TabsContent>
 
         <TabsContent value="audit" className="mt-6">

@@ -116,7 +116,14 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          <p className="mt-8 text-center text-sm text-muted-foreground">
+          <p className="mt-6 text-center text-sm text-muted-foreground">
+            Belum punya akun?{' '}
+            <Link href="/signup" className="font-medium text-primary hover:underline">
+              Daftar
+            </Link>
+          </p>
+
+          <p className="mt-4 text-center text-xs text-muted-foreground">
             Platform manajemen klinik terpadu untuk fasilitas kesehatan Indonesia
           </p>
         </motion.div>

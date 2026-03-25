@@ -11,7 +11,10 @@
       "Bash(npm ls:*)",
       "Bash(npx next:*)",
       "Bash(\"D:/Services Project/Med-Flow/next-env.d.ts\")",
-      "Bash(node fix-seed.js)"
+      "Bash(node fix-seed.js)",
+      "Bash(find:*)",
+      "Bash(ls \"D:/Services Project/Med-Flow/app/\\(auth\\)/\")",
+      "Bash(npm run:*)"
     ]
   }
 }

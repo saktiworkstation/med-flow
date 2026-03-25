@@ -9,7 +9,6 @@
 
 -- ── Auth Users (Supabase auth.users) ──
 -- Password for all: MedFlow123!
--- Hashed with bcrypt via Supabase default
 
 INSERT INTO auth.users (id, instance_id, email, encrypted_password, email_confirmed_at, created_at, updated_at, raw_app_meta_data, raw_user_meta_data, aud, role) VALUES
 ('550e8400-e29b-41d4-a716-446655440001', '00000000-0000-0000-0000-000000000000', 'budi@kliniksehatsentosa.co.id', crypt('MedFlow123!', gen_salt('bf')), NOW(), NOW(), NOW(), '{"provider":"email","providers":["email"]}', '{"full_name":"Dr. Budi Santoso, Sp.PD"}', 'authenticated', 'authenticated'),
@@ -19,14 +18,14 @@ INSERT INTO auth.users (id, instance_id, email, encrypted_password, email_confir
 ('550e8400-e29b-41d4-a716-446655440005', '00000000-0000-0000-0000-000000000000', 'rina@kliniksehatsentosa.co.id', crypt('MedFlow123!', gen_salt('bf')), NOW(), NOW(), NOW(), '{"provider":"email","providers":["email"]}', '{"full_name":"Rina Wulandari"}', 'authenticated', 'authenticated'),
 ('550e8400-e29b-41d4-a716-446655440006', '00000000-0000-0000-0000-000000000000', 'hendra@kliniksehatsentosa.co.id', crypt('MedFlow123!', gen_salt('bf')), NOW(), NOW(), NOW(), '{"provider":"email","providers":["email"]}', '{"full_name":"Hendra Gunawan, S.Farm, Apt"}', 'authenticated', 'authenticated');
 
--- Also insert into auth.identities (required by Supabase for email login)
+-- Auth identities (wajib untuk login via email)
 INSERT INTO auth.identities (id, user_id, provider_id, identity_data, provider, last_sign_in_at, created_at, updated_at) VALUES
-(gen_random_uuid(), '550e8400-e29b-41d4-a716-446655440001', 'budi@kliniksehatsentosa.co.id', '{"sub":"550e8400-e29b-41d4-a716-446655440001","email":"budi@kliniksehatsentosa.co.id"}', 'email', NOW(), NOW(), NOW()),
-(gen_random_uuid(), '550e8400-e29b-41d4-a716-446655440002', 'siti@kliniksehatsentosa.co.id', '{"sub":"550e8400-e29b-41d4-a716-446655440002","email":"siti@kliniksehatsentosa.co.id"}', 'email', NOW(), NOW(), NOW()),
-(gen_random_uuid(), '550e8400-e29b-41d4-a716-446655440003', 'ahmad@kliniksehatsentosa.co.id', '{"sub":"550e8400-e29b-41d4-a716-446655440003","email":"ahmad@kliniksehatsentosa.co.id"}', 'email', NOW(), NOW(), NOW()),
-(gen_random_uuid(), '550e8400-e29b-41d4-a716-446655440004', 'dewi@kliniksehatsentosa.co.id', '{"sub":"550e8400-e29b-41d4-a716-446655440004","email":"dewi@kliniksehatsentosa.co.id"}', 'email', NOW(), NOW(), NOW()),
-(gen_random_uuid(), '550e8400-e29b-41d4-a716-446655440005', 'rina@kliniksehatsentosa.co.id', '{"sub":"550e8400-e29b-41d4-a716-446655440005","email":"rina@kliniksehatsentosa.co.id"}', 'email', NOW(), NOW(), NOW()),
-(gen_random_uuid(), '550e8400-e29b-41d4-a716-446655440006', 'hendra@kliniksehatsentosa.co.id', '{"sub":"550e8400-e29b-41d4-a716-446655440006","email":"hendra@kliniksehatsentosa.co.id"}', 'email', NOW(), NOW(), NOW());
+(gen_random_uuid(), '550e8400-e29b-41d4-a716-446655440001', 'budi@kliniksehatsentosa.co.id', jsonb_build_object('sub', '550e8400-e29b-41d4-a716-446655440001', 'email', 'budi@kliniksehatsentosa.co.id', 'email_verified', true, 'phone_verified', false), 'email', NOW(), NOW(), NOW()),
+(gen_random_uuid(), '550e8400-e29b-41d4-a716-446655440002', 'siti@kliniksehatsentosa.co.id', jsonb_build_object('sub', '550e8400-e29b-41d4-a716-446655440002', 'email', 'siti@kliniksehatsentosa.co.id', 'email_verified', true, 'phone_verified', false), 'email', NOW(), NOW(), NOW()),
+(gen_random_uuid(), '550e8400-e29b-41d4-a716-446655440003', 'ahmad@kliniksehatsentosa.co.id', jsonb_build_object('sub', '550e8400-e29b-41d4-a716-446655440003', 'email', 'ahmad@kliniksehatsentosa.co.id', 'email_verified', true, 'phone_verified', false), 'email', NOW(), NOW(), NOW()),
+(gen_random_uuid(), '550e8400-e29b-41d4-a716-446655440004', 'dewi@kliniksehatsentosa.co.id', jsonb_build_object('sub', '550e8400-e29b-41d4-a716-446655440004', 'email', 'dewi@kliniksehatsentosa.co.id', 'email_verified', true, 'phone_verified', false), 'email', NOW(), NOW(), NOW()),
+(gen_random_uuid(), '550e8400-e29b-41d4-a716-446655440005', 'rina@kliniksehatsentosa.co.id', jsonb_build_object('sub', '550e8400-e29b-41d4-a716-446655440005', 'email', 'rina@kliniksehatsentosa.co.id', 'email_verified', true, 'phone_verified', false), 'email', NOW(), NOW(), NOW()),
+(gen_random_uuid(), '550e8400-e29b-41d4-a716-446655440006', 'hendra@kliniksehatsentosa.co.id', jsonb_build_object('sub', '550e8400-e29b-41d4-a716-446655440006', 'email', 'hendra@kliniksehatsentosa.co.id', 'email_verified', true, 'phone_verified', false), 'email', NOW(), NOW(), NOW());
 
 -- ── Clinic ─────────────────────────────
 

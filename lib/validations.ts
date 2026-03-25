@@ -157,12 +157,44 @@ export const invoiceSchema = z.object({
 
 export type InvoiceFormData = z.infer<typeof invoiceSchema>;
 
+// ── Signup (Clinic Owner) ─────────────
+
+export const signupSchema = z.object({
+  full_name: z.string().min(2, 'Nama lengkap minimal 2 karakter'),
+  email: z.string().email('Email tidak valid'),
+  password: z.string().min(8, 'Password minimal 8 karakter'),
+  confirm_password: z.string(),
+  clinic_name: z.string().min(3, 'Nama klinik minimal 3 karakter'),
+  clinic_address: z.string().min(1, 'Alamat klinik wajib diisi'),
+  clinic_phone: z.string().min(1, 'Telepon klinik wajib diisi'),
+}).refine((data) => data.password === data.confirm_password, {
+  message: 'Password dan konfirmasi password tidak sama',
+  path: ['confirm_password'],
+});
+
+export type SignupFormData = z.infer<typeof signupSchema>;
+
 // ── Team Invite ────────────────────────
 
 export const inviteSchema = z.object({
   email: z.string().email('Email tidak valid'),
-  role: z.enum(['doctor', 'nurse', 'receptionist', 'pharmacist']),
   full_name: z.string().min(2, 'Nama minimal 2 karakter'),
+  role: z.enum(['doctor', 'nurse', 'receptionist', 'pharmacist']),
+  specialization: z.string().optional(),
+  license_number: z.string().optional(),
 });
 
 export type InviteFormData = z.infer<typeof inviteSchema>;
+
+// ── Change Password ───────────────────
+
+export const changePasswordSchema = z.object({
+  current_password: z.string().min(1, 'Password lama wajib diisi'),
+  new_password: z.string().min(8, 'Password baru minimal 8 karakter'),
+  confirm_password: z.string(),
+}).refine((data) => data.new_password === data.confirm_password, {
+  message: 'Password baru dan konfirmasi tidak sama',
+  path: ['confirm_password'],
+});
+
+export type ChangePasswordFormData = z.infer<typeof changePasswordSchema>;
